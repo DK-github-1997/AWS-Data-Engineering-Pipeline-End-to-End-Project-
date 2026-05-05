@@ -1,2 +1,39 @@
-# AWS-Data-Engineering-Pipeline-End-to-End-Project-
-This project demonstrates an end-to-end data pipeline built on AWS using:  * S3 (Raw &amp; Optimized Layers) * Lambda (Data Transformation) * AWS Glue (ETL Processing) * Glue Data Catalog * Redshift Spectrum * AWS Step Functions (Orchestration) * Tableau (Reporting Layer)
+
+# AWS Data Engineering Pipeline
+
+End-to-end pipeline using S3, Lambda, Glue, Redshift, Step Functions, Tableau.
+
+aws-data-engineering-pipeline/
+│
+├── README.md
+├── architecture/
+│   └── architecture-diagram.png
+│
+├── lambda/
+│   ├── convert_to_parquet.py
+│   └── requirements.txt
+│
+├── glue/
+│   ├── glue_job_scd1.py
+│   ├── glue_job_scd2.py
+│   └── utils.py
+│
+├── step-functions/
+│   └── pipeline_orchestration.json
+│
+├── sql/
+│   ├── staging_tables.sql
+│   ├── curated_tables.sql
+│   └── transformations.sql
+│
+├── scripts/
+│   ├── upload_to_s3.sh
+│   └── trigger_pipeline.sh
+│
+├── config/
+│   └── config.yaml
+│
+├── tests/
+│   └── test_data_quality.sql
+│
+└── requirements.txt
