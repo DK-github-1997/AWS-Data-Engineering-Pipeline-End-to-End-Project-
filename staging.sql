@@ -1,0 +1,1 @@
+CREATE TABLE staging(id INT, name VARCHAR(50));

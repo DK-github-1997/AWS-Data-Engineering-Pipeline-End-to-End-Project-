@@ -1,0 +1,1 @@
+CREATE TABLE dim(id INT, name VARCHAR(50));

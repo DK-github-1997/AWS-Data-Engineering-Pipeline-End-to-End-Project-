@@ -1,0 +1,15 @@
+{
+  "StartAt": "Lambda",
+  "States": {
+    "Lambda": {
+      "Type": "Task",
+      "Resource": "lambda",
+      "Next": "Glue"
+    },
+    "Glue": {
+      "Type": "Task",
+      "Resource": "glue",
+      "End": true
+    }
+  }
+}
