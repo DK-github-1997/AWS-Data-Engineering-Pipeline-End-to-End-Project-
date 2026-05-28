@@ -5,7 +5,7 @@ End-to-end pipeline using S3, Lambda, Glue, Redshift, Step Functions, Tableau.
  
 aws-data-engineering-pipeline/
 │
-├── README.md
+├── README.md 
 ├── architecture/
 │   └── architecture-diagram.png
 │
