@@ -19,3 +19,7 @@ def lambda_handler(event, context):
 
     out_key = key.replace("raw/", "processed/").replace(".csv", ".parquet")
     s3.put_object(Bucket=bucket, Key=out_key, Body=buffer.getvalue())
+
+
+
+
