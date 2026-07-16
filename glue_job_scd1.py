@@ -1,6 +1,8 @@
 ## SCD Type 1 Code ##
 ## Author By DK1997 
 ## 18 Jun 2026 
+
+## SCD TYPE 1 SCD is a technique used in data warehouses to handle changes in dimension data while preserving the required level of historical information.
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName("SCD1").getOrCreate()
 df = spark.read.parquet("s3://bucket/processed/")
