@@ -1,4 +1,5 @@
-
+## Glue SCD type 2
+## Created on 20 July 2026
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_date, lit
 
