@@ -1,4 +1,4 @@
-## Python Code
+## convert csv to parquet
 ## Date- 05 july 2026
 
 import boto3, pandas as pd, io
