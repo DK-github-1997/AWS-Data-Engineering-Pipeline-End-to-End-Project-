@@ -1,6 +1,6 @@
 
 # AWS Data Engineering Pipeline For Project
-##Project Structure and readme file
+##Project Structure
 
 
 End-to-end pipeline using S3, Lambda, Glue, Redshift, Step Functions, Tableau.
