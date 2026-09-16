@@ -3,8 +3,6 @@
 ##Project Structure
 
 
-
-
 End-to-end pipeline using S3, Lambda, Glue, Redshift, Step Functions, Tableau.
  
 aws-data-engineering-pipeline/
