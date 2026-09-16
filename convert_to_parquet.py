@@ -2,6 +2,7 @@
 ## Date- 05 july 2026
 
 import boto3, pandas as pd, io
+
 import pyarrow as pa, pyarrow.parquet as pq
 
 s3 = boto3.client('s3')
