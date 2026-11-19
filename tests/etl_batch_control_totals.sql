@@ -5,13 +5,13 @@
 -- Assumed tables/columns (adjust to the project DDL if names differ):
 --   staging.sales_order(batch_id, order_id, net_amount)
 --   curated.fact_sales(batch_id, order_id, net_amount)
--- Bind/replace :batch_id with the batch being validated.
+-- Replace the example batch literal (1001) with the batch being validated.
 -- Read-only query: it does not update, delete, or publish records.
 
 WITH source_batch AS (
     SELECT order_id, net_amount
     FROM staging.sales_order
-    WHERE batch_id = :batch_id
+    WHERE batch_id = 1001
 ),
 target_batch AS (
     SELECT order_id, net_amount
@@ -35,6 +35,26 @@ target_metrics AS (
         SUM(CASE WHEN order_id IS NULL THEN 1 ELSE 0 END) AS null_key_count,
         SUM(CASE WHEN net_amount IS NULL THEN 1 ELSE 0 END) AS null_amount_count
     FROM target_batch
+),
+source_duplicate_keys AS (
+    SELECT COUNT(*) AS duplicate_key_count
+    FROM (
+        SELECT order_id
+        FROM source_batch
+        WHERE order_id IS NOT NULL
+        GROUP BY order_id
+        HAVING COUNT(*) > 1
+    ) d
+),
+target_duplicate_keys AS (
+    SELECT COUNT(*) AS duplicate_key_count
+    FROM (
+        SELECT order_id
+        FROM target_batch
+        WHERE order_id IS NOT NULL
+        GROUP BY order_id
+        HAVING COUNT(*) > 1
+    ) d
 ),
 checks AS (
     SELECT
@@ -79,6 +99,26 @@ checks AS (
     UNION ALL
 
     SELECT
+        'SOURCE_DUPLICATE_ORDER_KEYS',
+        d.duplicate_key_count,
+        'BLOCKER',
+        d.duplicate_key_count,
+        0
+    FROM source_duplicate_keys d
+
+    UNION ALL
+
+    SELECT
+        'TARGET_DUPLICATE_ORDER_KEYS',
+        d.duplicate_key_count,
+        'BLOCKER',
+        d.duplicate_key_count,
+        0
+    FROM target_duplicate_keys d
+
+    UNION ALL
+
+    SELECT
         'SOURCE_NULL_BUSINESS_KEYS',
         s.null_key_count,
         'BLOCKER',
@@ -117,5 +157,5 @@ ORDER BY
 -- 2. Confirm both tables are filtered to the same immutable batch identifier.
 -- 3. A matching total alone does not prove row-level correctness; combine this
 --    control with key-level and business-rule checks.
--- 4. Investigate duplicate keys separately; COUNT(DISTINCT) can conceal them.
+-- 4. Duplicate business keys are checked independently on both sides.
 -- 5. A BLOCK_PUBLISH result should stop publication pending investigation.
