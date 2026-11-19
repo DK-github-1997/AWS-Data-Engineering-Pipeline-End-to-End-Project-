@@ -16,7 +16,7 @@ WITH source_batch AS (
 target_batch AS (
     SELECT order_id, net_amount
     FROM curated.fact_sales
-    WHERE batch_id = :batch_id
+    WHERE batch_id = 1001
 ),
 source_metrics AS (
     SELECT
